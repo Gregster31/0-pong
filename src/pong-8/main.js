@@ -17,6 +17,7 @@
 
 import Ball from "./Ball.js";
 import Paddle from "./Paddle.js";
+import AiPaddle from "./AiPaddle.js"
 
 /**
  * We initialize our game by grabbing the `canvas` element from
@@ -45,7 +46,9 @@ const VICTORY_SCORE = 10;
 
 // Initialize the player paddles and the ball as class instances.
 const player1 = new Paddle(30, 30, 20, 200, CANVAS_HEIGHT);
-const player2 = new Paddle(CANVAS_WIDTH - 50, CANVAS_HEIGHT - 230, 20, 200, CANVAS_HEIGHT);
+// const player1 = new AiPaddle(30, 30, 20, 200, CANVAS_HEIGHT);
+// const player2 = new Paddle(CANVAS_WIDTH - 50, CANVAS_HEIGHT - 230, 20, 200, CANVAS_HEIGHT);
+const player2 = new AiPaddle(CANVAS_WIDTH - 50, CANVAS_HEIGHT - 230, 20, 200, CANVAS_HEIGHT);
 const ball = new Ball(CANVAS_WIDTH / 2 - 10, CANVAS_HEIGHT / 2 - 10, 20, 20, CANVAS_HEIGHT);
 
 const sounds = {
@@ -161,9 +164,9 @@ function update(dt) {
 			}
 		}
 	}
-
 	player1.update(dt);
-	player2.update(dt);
+	// player2.update(dt);
+
 
 	// Player 1 movement.
 	if (keys.w) {
@@ -176,16 +179,10 @@ function update(dt) {
 		player1.stop();
 	}
 
-	// Player 2 movement.
-	if (keys.ArrowUp) {
-		player2.moveUp();
-	}
-	else if (keys.ArrowDown) {
-		player2.moveDown();
-	}
-	else {
-		player2.stop();
-	}
+	// player1.move(ball.y, dt)
+
+	// Player 2 AI movement.
+	player2.move(ball.y, dt);
 
 	render();
 }
